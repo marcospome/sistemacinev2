@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace semana4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240624191649_hola")]
+    partial class hola
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,18 +57,25 @@ namespace semana4.Migrations
 
                     b.Property<string>("Idioma")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("PeliculaId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PeliculaId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Sala")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("FuncionId");
 
                     b.HasIndex("PeliculaId");
+
+                    b.HasIndex("PeliculaId1");
 
                     b.ToTable("Funcion");
                 });
@@ -116,13 +126,13 @@ namespace semana4.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "83a341f2-3c8d-4c1a-8366-36e0fd96732e",
+                            Id = "9291c98f-d958-4e5e-8a76-e3ab2c1c742d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fc63ac26-99a5-4908-90b5-a0e6e200d50d",
+                            Id = "c137e0bd-3c68-409b-913c-bf70465bd502",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -358,13 +368,17 @@ namespace semana4.Migrations
 
             modelBuilder.Entity("Funcion", b =>
                 {
-                    b.HasOne("Pelicula", "fPelicula")
-                        .WithMany("Funciones")
+                    b.HasOne("Pelicula", "Pelicula")
+                        .WithMany()
                         .HasForeignKey("PeliculaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("fPelicula");
+                    b.HasOne("Pelicula", null)
+                        .WithMany("Funciones")
+                        .HasForeignKey("PeliculaId1");
+
+                    b.Navigation("Pelicula");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

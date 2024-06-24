@@ -20,8 +20,8 @@ namespace semana4.Controllers
         // GET: Funcions
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Funcion.Include(f => f.Pelicula);
-            return View(await applicationDbContext.ToListAsync());
+            var funcions = await _context.Funcion.Include(f => f.fPelicula).ToListAsync();
+            return View(funcions);
         }
 
         // GET: Funcions/Details/5
@@ -33,7 +33,6 @@ namespace semana4.Controllers
             }
 
             var funcion = await _context.Funcion
-                .Include(f => f.Pelicula)
                 .FirstOrDefaultAsync(m => m.FuncionId == id);
             if (funcion == null)
             {
@@ -43,19 +42,17 @@ namespace semana4.Controllers
             return View(funcion);
         }
 
-        // GET: Funcions/Create
+        // GET: Funciones/Create
         public IActionResult Create()
         {
             ViewData["PeliculaId"] = new SelectList(_context.Peliculas, "PeliculaId", "Titulo");
             return View();
         }
 
-        // POST: Funcions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Funciones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FuncionId,Fecha,Sala,Idioma,PeliculaId,Hora")] Funcion funcion)
+        public async Task<IActionResult> Create([Bind("Fecha,Sala,Idioma,PeliculaId,Hora")] Funcion funcion)
         {
             if (ModelState.IsValid)
             {
@@ -70,6 +67,8 @@ namespace semana4.Controllers
         // GET: Funcions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["PeliculaId"] = new SelectList(_context.Peliculas, "PeliculaId", "Titulo");
+
             if (id == null)
             {
                 return NotFound();
@@ -80,7 +79,6 @@ namespace semana4.Controllers
             {
                 return NotFound();
             }
-            ViewData["PeliculaId"] = new SelectList(_context.Peliculas, "PeliculaId", "Titulo", funcion.PeliculaId);
             return View(funcion);
         }
 
@@ -116,7 +114,6 @@ namespace semana4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PeliculaId"] = new SelectList(_context.Peliculas, "PeliculaId", "Titulo", funcion.PeliculaId);
             return View(funcion);
         }
 
@@ -129,7 +126,7 @@ namespace semana4.Controllers
             }
 
             var funcion = await _context.Funcion
-                .Include(f => f.Pelicula)
+                .Include(f => f.fPelicula)  // Incluye la propiedad fPelicula
                 .FirstOrDefaultAsync(m => m.FuncionId == id);
             if (funcion == null)
             {
@@ -148,9 +145,8 @@ namespace semana4.Controllers
             if (funcion != null)
             {
                 _context.Funcion.Remove(funcion);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

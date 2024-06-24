@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -38,6 +39,9 @@ public class Pelicula
 
     public bool Activo { get; set; } = false; // Nuevo campo para indicar si la película está activa o inactiva
 
+    public ICollection<Funcion>? Funciones { get; set; }
+
+
 }
 
 public class Genero
@@ -60,27 +64,18 @@ public class Clasificacion
 
 public class Funcion
 {
-    [Key]
     public int FuncionId { get; set; }
 
-    [Required]
-    public DateTime Fecha { get; set; }
-
-    [Required]
-    [StringLength(100)]
+    [DataType(DataType.Date)]
+    public DateTime Fecha{ get; set; }
     public string Sala { get; set; }
-
-    [Required]
-    [StringLength(50)]
     public string Idioma { get; set; }
 
-    [Required]
+    [ForeignKey("PeliculaId")]
     public int PeliculaId { get; set; }
 
-    public virtual Pelicula Pelicula { get; set; }  // Propiedad de navegación
+    public virtual Pelicula? fPelicula { get; set; } // Propiedad de navegación
 
-    [Required]
-    [DataType(DataType.Time)]
+
     public TimeSpan Hora { get; set; }
 }
-

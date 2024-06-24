@@ -46,15 +46,15 @@ namespace semana4.Controllers
         // GET: Peliculas/Create
         public IActionResult Create()
         {
-            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre");
-            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre");
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "GeneroId", "Nombre");
+            ViewData["ClasificacionId"] = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre");
             return View();
         }
 
         // POST: Peliculas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PeliculaId,Titulo,Director,FechaDeLanzamiento,Duracion,Sinopsis,Portada,Trailer,GeneroId,ClasificacionId,Activo")] Pelicula pelicula)
+        public async Task<IActionResult> Create([Bind("Titulo,Director,FechaDeLanzamiento,Duracion,Sinopsis,Portada,Trailer,GeneroId,ClasificacionId,Activo")] Pelicula pelicula)
         {
             if (ModelState.IsValid)
             {
@@ -62,11 +62,8 @@ namespace semana4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            // Si el modelo no es válido, recarga las listas para los selectores en la vista
-            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre", pelicula.GeneroId);
-            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre", pelicula.ClasificacionId);
-
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "GeneroId", "Nombre", pelicula.GeneroId);
+            ViewData["ClasificacionId"] = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre", pelicula.ClasificacionId);
             return View(pelicula);
         }
 

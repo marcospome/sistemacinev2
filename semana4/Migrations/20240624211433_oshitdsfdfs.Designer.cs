@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace semana4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240624211433_oshitdsfdfs")]
+    partial class oshitdsfdfs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,13 +119,13 @@ namespace semana4.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "83a341f2-3c8d-4c1a-8366-36e0fd96732e",
+                            Id = "d41181dc-77af-4204-8409-5947e44073c1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fc63ac26-99a5-4908-90b5-a0e6e200d50d",
+                            Id = "bb08c574-0eaf-4a9c-9c4f-3df66c71c1dc",
                             Name = "User",
                             NormalizedName = "USER"
                         });

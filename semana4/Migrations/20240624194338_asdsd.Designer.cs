@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace semana4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240624194338_asdsd")]
+    partial class asdsd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,20 +115,6 @@ namespace semana4.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "83a341f2-3c8d-4c1a-8366-36e0fd96732e",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "fc63ac26-99a5-4908-90b5-a0e6e200d50d",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -358,13 +347,13 @@ namespace semana4.Migrations
 
             modelBuilder.Entity("Funcion", b =>
                 {
-                    b.HasOne("Pelicula", "fPelicula")
-                        .WithMany("Funciones")
+                    b.HasOne("Pelicula", "Pelicula")
+                        .WithMany()
                         .HasForeignKey("PeliculaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("fPelicula");
+                    b.Navigation("Pelicula");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -441,11 +430,6 @@ namespace semana4.Migrations
             modelBuilder.Entity("Genero", b =>
                 {
                     b.Navigation("Peliculas");
-                });
-
-            modelBuilder.Entity("Pelicula", b =>
-                {
-                    b.Navigation("Funciones");
                 });
 #pragma warning restore 612, 618
         }

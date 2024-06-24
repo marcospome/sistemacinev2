@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Idioma)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Pelicula)
+                Pelicula
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Hora)
@@ -31,29 +31,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sala)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Idioma)
-            </td>
-            <td>
-                 @Html.DisplayFor(modelItem => item.Pelicula.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hora)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FuncionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FuncionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FuncionId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sala)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idioma)
+                </td>
+                <td>
+                    @item.fPelicula?.Titulo 
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hora)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FuncionId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.FuncionId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.FuncionId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

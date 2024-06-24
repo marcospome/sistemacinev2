@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace semana4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240624202116_oshit")]
+    partial class oshit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,13 +119,13 @@ namespace semana4.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "83a341f2-3c8d-4c1a-8366-36e0fd96732e",
+                            Id = "24c29b7b-05c0-4a3b-abc8-01c6e0aee293",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fc63ac26-99a5-4908-90b5-a0e6e200d50d",
+                            Id = "4fde02b8-bee2-4a06-8d2f-ed4082883c61",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -358,13 +361,13 @@ namespace semana4.Migrations
 
             modelBuilder.Entity("Funcion", b =>
                 {
-                    b.HasOne("Pelicula", "fPelicula")
+                    b.HasOne("Pelicula", "Pelicula")
                         .WithMany("Funciones")
                         .HasForeignKey("PeliculaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("fPelicula");
+                    b.Navigation("Pelicula");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

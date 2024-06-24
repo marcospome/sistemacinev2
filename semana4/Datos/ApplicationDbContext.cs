@@ -22,10 +22,6 @@ public class ApplicationDbContext : IdentityDbContext<Usuario, IdentityRole, str
         modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" });
         modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER" });
 
-        modelBuilder.Entity<Funcion>()
-            .HasOne(f => f.Pelicula)
-            .WithMany() // Sin especificar propiedad de navegación en Pelicula
-            .HasForeignKey(f => f.PeliculaId)
-            .IsRequired();
     }
+
 }
