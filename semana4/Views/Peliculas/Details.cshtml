@@ -9,6 +9,7 @@
 
     <div class="row">
         <div class="col-md-6">
+            <!-- Información básica de la película -->
             <ul class="list-group">
                 <li class="list-group-item">
                     <strong>Director:</strong> @Model.Director
@@ -22,25 +23,16 @@
                 <li class="list-group-item">
                     <strong>Sinopsis:</strong> @Model.Sinopsis
                 </li>
-                <li class="list-group-item d-flex align-items-center">
-                    <strong>Estado:</strong>
-                    @if (Model.Activo)
-                    {
-                        <span class="badge badge-success ml-2">Activo</span>
-                    }
-                    else
-                    {
-                        <span class="badge badge-danger ml-2">Inactivo</span>
-                    }
-                </li>
             </ul>
 
+            <!-- Botón de retorno -->
             <div class="text-center mt-3">
                 <a asp-action="Index" class="btn btn-outline-primary ml-2">Volver a la cartelera</a>
             </div>
         </div>
 
         <div class="col-md-6">
+            <!-- Trailer de la película -->
             <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
                 @if (!string.IsNullOrWhiteSpace(Model.Trailer))
                 {
@@ -53,7 +45,38 @@
             </div>
         </div>
 
-
+        <!-- Lista de funciones de la película -->
+        <div class="col-md-12 mt-4">
+            <h3>Funciones de @Model.Titulo</h3>
+            @if (Model.Funciones != null && Model.Funciones.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Sala</th>
+                            <th>Idioma</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var funcion in Model.Funciones)
+                        {
+                            <tr>
+                                <td>@funcion.Fecha.ToShortDateString()</td>
+                                <td>@funcion.Sala</td>
+                                <td>@funcion.Idioma</td>
+                                <td>@funcion.Hora.ToString("hh\\:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No hay funciones disponibles para esta película.</p>
+            }
+        </div>
     </div>
 </div>
 

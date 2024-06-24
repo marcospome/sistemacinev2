@@ -34,7 +34,9 @@ namespace semana4.Controllers
             }
 
             var pelicula = await _context.Peliculas
+                .Include(p => p.Funciones) // Incluir las funciones asociadas a la película
                 .FirstOrDefaultAsync(m => m.PeliculaId == id);
+
             if (pelicula == null)
             {
                 return NotFound();
