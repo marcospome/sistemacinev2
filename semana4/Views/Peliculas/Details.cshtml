@@ -1,0 +1,79 @@
+﻿@model Pelicula
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">@Model.Titulo</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Director:</strong> @Model.Director
+                </li>
+                <li class="list-group-item">
+                    <strong>Fecha de Lanzamiento:</strong> @Model.FechaDeLanzamiento.ToShortDateString()
+                </li>
+                <li class="list-group-item">
+                    <strong>Duración:</strong> @Model.Duracion minutos
+                </li>
+                <li class="list-group-item">
+                    <strong>Sinopsis:</strong> @Model.Sinopsis
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                    <strong>Estado:</strong>
+                    @if (Model.Activo)
+                    {
+                        <span class="badge badge-success ml-2">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger ml-2">Inactivo</span>
+                    }
+                </li>
+            </ul>
+
+            <div class="text-center mt-3">
+                <a asp-action="Index" class="btn btn-outline-primary ml-2">Volver a la cartelera</a>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
+                @if (!string.IsNullOrWhiteSpace(Model.Trailer))
+                {
+                    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="@GetYouTubeEmbedUrl(Model.Trailer)" allowfullscreen></iframe>
+                }
+                else
+                {
+                    <p class="text-center text-black">Trailer no disponible.</p>
+                }
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@functions {
+    public string GetYouTubeEmbedUrl(string videoUrl)
+    {
+        if (videoUrl.Contains("embed"))
+        {
+            return videoUrl;
+        }
+
+        var uri = new Uri(videoUrl);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var videoId = query["v"];
+
+        if (!string.IsNullOrWhiteSpace(videoId))
+        {
+            return $"https://www.youtube.com/embed/{videoId}";
+        }
+
+        return string.Empty; // Handle invalid URLs
+    }
+}
