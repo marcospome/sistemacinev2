@@ -116,6 +116,7 @@
     <div class="container">
         <h2 class="section-title">🎬 PRÓXIMOS ESTRENOS 🎬</h2>
         @foreach (var pelicula in Model){
+            @if (pelicula.Activo) {
             <div class="next-release">
                 <div class="release">
                     <div class="release-image">
@@ -126,6 +127,7 @@
                     </div>
                 </div>
             </div>
+            }
         }
         <div class="image-container">
             <img src="~/Images/feat1.png" alt="Imagen 1">
