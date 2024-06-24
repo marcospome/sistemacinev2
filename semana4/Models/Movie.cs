@@ -1,7 +1,6 @@
-﻿using semana4.Models;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+
+
 
 public class Pelicula
 {
@@ -39,7 +38,6 @@ public class Pelicula
 
     public bool Activo { get; set; } = false; // Nuevo campo para indicar si la película está activa o inactiva
 
-
 }
 
 public class Genero
@@ -59,3 +57,30 @@ public class Clasificacion
     public string Nombre { get; set; }
     public ICollection<Pelicula> Peliculas { get; set; }
 }
+
+public class Funcion
+{
+    [Key]
+    public int FuncionId { get; set; }
+
+    [Required]
+    public DateTime Fecha { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string Sala { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Idioma { get; set; }
+
+    [Required]
+    public int PeliculaId { get; set; }
+
+    public virtual Pelicula Pelicula { get; set; }  // Propiedad de navegación
+
+    [Required]
+    [DataType(DataType.Time)]
+    public TimeSpan Hora { get; set; }
+}
+

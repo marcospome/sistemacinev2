@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using semana4.Datos;
+using semana4.Models;
 
 namespace semana4.Controllers
 {
@@ -51,8 +52,6 @@ namespace semana4.Controllers
         }
 
         // POST: Peliculas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PeliculaId,Titulo,Director,FechaDeLanzamiento,Duracion,Sinopsis,Portada,Trailer,GeneroId,ClasificacionId,Activo")] Pelicula pelicula)
@@ -63,14 +62,17 @@ namespace semana4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            // Si el modelo no es válido, recarga las listas para los selectores en la vista
+            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre", pelicula.GeneroId);
+            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre", pelicula.ClasificacionId);
+
             return View(pelicula);
         }
 
         // GET: Peliculas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre");
-            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre");
             if (id == null)
             {
                 return NotFound();
@@ -81,12 +83,12 @@ namespace semana4.Controllers
             {
                 return NotFound();
             }
+            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre");
+            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre");
             return View(pelicula);
         }
 
         // POST: Peliculas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PeliculaId,Titulo,Director,FechaDeLanzamiento,Duracion,Sinopsis,Portada,Trailer,GeneroId,ClasificacionId,Activo")] Pelicula pelicula)
@@ -116,6 +118,8 @@ namespace semana4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre");
+            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre");
             return View(pelicula);
         }
 

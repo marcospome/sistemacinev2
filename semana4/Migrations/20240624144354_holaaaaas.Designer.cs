@@ -5,15 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using semana4.Datos;
 
 #nullable disable
 
 namespace semana4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240623235511_weeeas")]
-    partial class weeeas
+    [Migration("20240624144354_holaaaaas")]
+    partial class holaaaaas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +39,40 @@ namespace semana4.Migrations
                     b.HasKey("ClasificacionId");
 
                     b.ToTable("Clasificaciones");
+                });
+
+            modelBuilder.Entity("Funcion", b =>
+                {
+                    b.Property<int>("FuncionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FuncionId"));
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("Hora")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Idioma")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("PeliculaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sala")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("FuncionId");
+
+                    b.HasIndex("PeliculaId");
+
+                    b.ToTable("Funcion");
                 });
 
             modelBuilder.Entity("Genero", b =>
@@ -84,6 +117,20 @@ namespace semana4.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b205abb7-535f-4c94-bb17-2404fe23d144",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "107ce885-e441-40a6-9f7c-df139e7db7e8",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -312,6 +359,17 @@ namespace semana4.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Funcion", b =>
+                {
+                    b.HasOne("Pelicula", "Pelicula")
+                        .WithMany()
+                        .HasForeignKey("PeliculaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pelicula");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

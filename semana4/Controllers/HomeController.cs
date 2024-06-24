@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using semana4.Datos;
 using semana4.Models; // Asegúrate de ajustar el espacio de nombres según tu aplicación
 using System;
 using System.Diagnostics;
